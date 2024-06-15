@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NETZACH 777</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF00;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            overflow: hidden;
+        }
+        .matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+        canvas {
+            display: block;
+        }
+        h1 {
+            color: #FF00FF;
+            text-shadow: 0 0 5px #FF00FF, 0 0 10px #FF00FF, 0 0 20px #FF00FF, 0 0 40px #FF00FF;
+            animation: neonText 1.5s infinite alternate;
+        }
+        .neon-text {
+            color: #FF00FF;
+            text-shadow: 0 0 5px #FF00FF, 0 0 10px #FF00FF, 0 0 20px #FF00FF, 0 0 40px #FF00FF;
+            animation: neonText 1.5s infinite alternate;
+        }
+        @keyframes neonText {
+            from {
+                text-shadow: 0 0 5px #FF00FF, 0 0 10px #FF00FF, 0 0 20px #FF00FF, 0 0 40px #FF00FF;
+            }
+            to {
+                text-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF, 0 0 40px #FF00FF, 0 0 80px #FF00FF;
+            }
+        }
+        .highlight {
+            background-color:black;
+            color: #FF00FF;
+            text-shadow: 0 0 5px #FF00FF, 0 0 10px #FF00FF, 0 0 20px #FF00FF, 0 0 40px #FF00FF;
+            animation: neonText 1.5s infinite alternate;
+
+        }
+        .warning {
+            color: red;
+        }
+        .terminal {
+            background-color: #000000;
+            color: #00FF00;
+            border: 2px solid #00FF00;
+            padding: 10px;
+            margin: 10px;
+            width: 40%;
+            height: 200px;
+            overflow-y: auto;
+            position: relative;
+            z-index: 1;
+        }
+        .terminal pre {
+            white-space: pre-wrap;
+        }
+        .save-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #FF00FF;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix" id="matrix"></div>
+    <h1 class="neon-text">NETZACH 777</h1>
+    <p style="color:white;">O que existe depois do abismo? <span class="highlight" style="color:">EU SEI!</span></p>
+    <div class="terminal" id="terminal1">
+        <pre>
+  _   _ _______ _______    _       _____ 
+ | \ | |__   __|__   __|  | |     / ____|
+ |  \| |  | |     | | __ _| |    | (___  
+ | . ` |  | |     | |/ _` | |     \___ \ 
+ | |\  |  | |     | | (_| | |____ ____) |
+ |_| \_|  |_|     |_|\__,_|______|_____/ 
+        </pre>
+        <p class="warning">WARNING: Unauthorized access is prohibited</p>
+        <p>O que existe depois do abismo? <span class="highlight">EU SEI!</span></p>
+    </div>
+    <div class="terminal" id="terminal2"></div>
+    <button class="save-button" onclick="saveLogs()">Save Logs</button>
+
+    <script>
+        // Matrix animation
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        document.getElementById('matrix').appendChild(canvas);
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const columns = Math.floor(canvas.width / 20);
+        const drops = Array(columns).fill(1);
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#FF00FF';
+            ctx.font = '20px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = String.fromCharCode(Math.random() * 128);
+                ctx.fillText(text, i * 20, drops[i] * 20);
+
+                if (Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+
+            ctx.fillStyle = '#00FF00';
+            ctx.font = '20px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = String.fromCharCode(Math.random() * 128);
+                ctx.fillText(text, i * 20, drops[i] * 20);
+
+                if (Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        };
+
+        setInterval(draw, 33);
+
+        const terminal1 = document.getElementById('terminal1');
+        const terminal2 = document.getElementById('terminal2');
+        let logData = '';
+
+        function addMessage(terminal, message) {
+            const p = document.createElement('p');
+            p.textContent = message;
+            terminal.appendChild(p);
+            terminal.scrollTop = terminal.scrollHeight;
+            logData += message + '\n';
+            saveLogsToServer(message); // Save each message to the server
+        }
+
+        function generateMessages(terminal, messages) {
+            messages.forEach((message, index) => {
+                setTimeout(() => addMessage(terminal, message), index * 1000);
+            });
+        }
+
+        const messages1 = [
+            "Initializing system...",
+            "Loading modules...",
+            "Accessing secure database...",
+            "Decrypting files..."
+        ];
+
+        const messages2 = [
+            "Starting network scan...",
+            "Scanning for vulnerabilities...",
+            "Compiling report...",
+            "Operation complete."
+        ];
+
+        generateMessages(terminal1, messages1);
+        generateMessages(terminal2, messages2);
+
+        // Function to play beep sound
+        function playBeep() {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            oscillator.type = 'square';
+            oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); // Value in hertz
+            oscillator.connect(audioCtx.destination);
+            oscillator.start();
+            setTimeout(() => oscillator.stop(), 100); // Play sound for 100ms
+        }
+
+        // Function to fetch IP and location information
+        async function fetchIPandLocation() {
+            try {
+                // Fetch the IP address
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                const ipAddress = ipData.ip;
+                addMessage(terminal1, `Your IP Address: ${ipAddress}`);
+
+                // Fetch location data based on IP
+                const locationResponse = await fetch(`https://ipinfo.io/${ipAddress}/json?token=ba21b8de81a62e`);
+                const locationData = await locationResponse.json();
+                const location = `Location: ${locationData.city}, ${locationData.region}, ${locationData.country}`;
+                addMessage(terminal1, location);
+
+                // Fetch WHOIS data
+                const whoisResponse = await fetch(`https://jsonwhoisapi.com/api/v1/whois?identifier=${ipAddress}`, {
+                    headers: {
+                        'Authorization': 'Token aJLeZ_tWFkCfsRVpB13ThA'
+                    }
+                });
+                const whoisData = await whoisResponse.json();
+                addMessage(terminal1, `WHOIS Information: ${whoisData.data.domain_name || 'No domain info'}`);
+
+                // Simulate connected users and open ports
+                addMessage(terminal1, 'Connected users: 5');
+                addMessage(terminal1, 'Open ports: 22, 80, 443');
+
+                // Play beep sound
+                playBeep();
+
+            } catch (error) {
+                console.error('Error fetching IP and location:', error);
+                addMessage(terminal1, 'Error fetching IP and location.');
+            }
+        }
+
+        // Function to fetch and display browser information
+        function displayBrowserInfo() {
+            const userAgent = navigator.userAgent;
+            const platform = navigator.platform;
+            const browserName = navigator.appName;
+            const browserVersion = navigator.appVersion;
+
+            addMessage(terminal2, `Browser: ${browserName}`);
+            addMessage(terminal2, `Version: ${browserVersion}`);
+            addMessage(terminal2, `Platform: ${platform}`);
+            addMessage(terminal2, `User Agent: ${userAgent}`);
+        }
+
+        // Save logs to the server
+        async function saveLogsToServer(log) {
+            try {
+                await fetch('/save-logs', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ logs: log }),
+                });
+            } catch (error) {
+                console.error('Error saving logs to server:', error);
+            }
+        }
+
+        // Fetch IP and location information
+        fetchIPandLocation();
+        // Display browser information
+        displayBrowserInfo();
+
+        // Geolocation
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const { latitude, longitude } = position.coords;
+                addMessage(terminal2, `Geolocation: Lat ${latitude}, Long ${longitude}`);
+            });
+        } else {
+            addMessage(terminal2, 'Geolocation is not supported by this browser.');
+        }
+    </script>
+</body>
+</html>
